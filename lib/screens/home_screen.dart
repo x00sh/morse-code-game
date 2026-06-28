@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/koch_lessons.dart';
 import '../models/prompt_mode.dart';
 import '../services/content_repository.dart';
 import '../state/game_controller.dart';
 import '../widgets/reference_chart_sheet.dart';
 import 'game_screen.dart';
+import 'lessons_screen.dart';
 import 'settings_screen.dart';
 
 /// Landing screen: pick a content set and a mode, or open settings/reference.
@@ -79,6 +81,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 selected: {_set},
                 onSelectionChanged: (sel) => setState(() => _set = sel.first),
                 showSelectedIcon: false,
+              ),
+              const SizedBox(height: 28),
+              Text('Learn', style: theme.textTheme.titleMedium),
+              const SizedBox(height: 4),
+              Text(
+                '${game.unlockedLessonCount - kKochInitialUnlockCount + 1} of '
+                '${kAllLessons.length} lessons unlocked',
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.outline),
+              ),
+              const SizedBox(height: 8),
+              FilledButton.icon(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (_) => const LessonsScreen()),
+                ),
+                icon: const Icon(Icons.school_outlined),
+                label: const Text('Learn — Koch lessons'),
+                style: _bigButton,
               ),
               const SizedBox(height: 28),
               Text('Practice', style: theme.textTheme.titleMedium),

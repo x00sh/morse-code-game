@@ -17,27 +17,46 @@ class ScoreTimerBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _Chip(
-            icon: Icons.star_rounded,
-            label: 'Score',
-            value: '${game.score}',
-          ),
-          if (game.mode == GameMode.timed)
-            _Chip(
-              icon: Icons.timer_outlined,
-              label: 'Time',
-              value: '${game.secondsLeft}s',
-              highlight: game.secondsLeft <= 10,
-              color: game.secondsLeft <= 10 ? scheme.error : null,
-            )
-          else
-            _Chip(
-              icon: Icons.emoji_events_outlined,
-              label: 'Best',
-              value: '${game.bestScore}',
-            ),
-        ],
+        children: switch (game.mode) {
+          GameMode.lesson => [
+              _Chip(
+                icon: Icons.school_outlined,
+                label: 'Lesson',
+                value: '${game.lessonIndex}/${game.lessonTotal}',
+              ),
+              _Chip(
+                icon: Icons.percent_rounded,
+                label: 'Acc',
+                value: '${(game.lessonAccuracy * 100).round()}%',
+              ),
+            ],
+          GameMode.timed => [
+              _Chip(
+                icon: Icons.star_rounded,
+                label: 'Score',
+                value: '${game.score}',
+              ),
+              _Chip(
+                icon: Icons.timer_outlined,
+                label: 'Time',
+                value: '${game.secondsLeft}s',
+                highlight: game.secondsLeft <= 10,
+                color: game.secondsLeft <= 10 ? scheme.error : null,
+              ),
+            ],
+          GameMode.practice => [
+              _Chip(
+                icon: Icons.star_rounded,
+                label: 'Score',
+                value: '${game.score}',
+              ),
+              _Chip(
+                icon: Icons.emoji_events_outlined,
+                label: 'Best',
+                value: '${game.bestScore}',
+              ),
+            ],
+        },
       ),
     );
   }

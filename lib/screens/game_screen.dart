@@ -136,6 +136,7 @@ class _GameScreenState extends State<GameScreen> {
     final title = switch (widget.mode) {
       GameMode.practice => 'Practice',
       GameMode.timed => 'Timed Challenge',
+      GameMode.lesson => 'Lesson',
     };
 
     return PopScope(
