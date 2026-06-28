@@ -1,26 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Single source of truth for the cold-war terminal look.
+///
+/// To change the design by hand, edit the **DESIGN TOKENS** block below —
+/// colors, font, corner radius, glow. Everything else (`buildTheme()` and the
+/// widgets) derives from these tokens, so a change in one place flows
+/// everywhere. Widgets may read either `Theme.of(context)` or these `AppTheme`
+/// constants directly; both resolve to the same token.
 class AppTheme {
   AppTheme._();
 
-  // Cold-war terminal palette
+  // ======================= DESIGN TOKENS — edit these =======================
+
+  // Palette
   static const Color kColorBackground = Color(0xFF12131C);
   static const Color kColorPrimary = Color(0xFF39FF14);
+  static const Color kColorPrimaryContainer = Color(0xFF1A3010);
   static const Color kColorSecondary = Color(0xFF00E5FF);
   static const Color kColorError = Color(0xFFFF3333);
   static const Color kColorSuccess = Color(0xFF1FCC00);
   static const Color kColorSurface = Color(0xFF1A1B26);
   static const Color kColorOnSurface = Color(0xFFC8D4C0);
+  static const Color kColorOutline = Color(0xFF4A6A42);
+  static const Color kColorOutlineVariant = Color(0xFF2A3A28);
 
-  static const _outline = Color(0xFF4A6A42);
-  static const _outlineVariant = Color(0xFF2A3A28);
+  /// Subtle CRT scanline overlay (black at ~4% opacity).
+  static const Color kColorScanline = Color(0x0A000000);
+
+  /// Square corners everywhere — the terminal aesthetic.
+  static const double kRadius = 0;
+
+  /// Phosphor-glow blur radii (inner, outer).
+  static const double kGlowInner = 8;
+  static const double kGlowOuter = 20;
+
+  /// The one place the typeface is named. All text styles go through [mono].
+  static TextStyle mono({
+    double? size,
+    FontWeight? weight,
+    double? spacing,
+    double? height,
+    Color? color,
+  }) =>
+      GoogleFonts.courierPrime(
+        fontSize: size,
+        fontWeight: weight,
+        letterSpacing: spacing,
+        height: height,
+        color: color,
+      );
+
+  // =========================== Derived theme ================================
+
+  /// Square shape shared by buttons, cards, dialogs, sheets, list tiles, menus.
+  static const _square = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(kRadius)),
+  );
+
+  static OutlineInputBorder _inputBorder(Color color, [double width = 1]) =>
+      OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(kRadius)),
+        borderSide: BorderSide(color: color, width: width),
+      );
 
   static ThemeData buildTheme() {
     const colorScheme = ColorScheme.dark(
       primary: kColorPrimary,
       onPrimary: kColorBackground,
-      primaryContainer: Color(0xFF1A3010),
+      primaryContainer: kColorPrimaryContainer,
       onPrimaryContainer: kColorPrimary,
       secondary: kColorSecondary,
       onSecondary: kColorBackground,
@@ -37,8 +85,8 @@ class AppTheme {
       surface: kColorBackground,
       onSurface: kColorOnSurface,
       onSurfaceVariant: kColorOnSurface,
-      outline: _outline,
-      outlineVariant: _outlineVariant,
+      outline: kColorOutline,
+      outlineVariant: kColorOutlineVariant,
       surfaceContainerLowest: kColorBackground,
       surfaceContainerLow: Color(0xFF171828),
       surfaceContainer: kColorSurface,
@@ -46,25 +94,27 @@ class AppTheme {
       surfaceContainerHighest: kColorSurface,
       inverseSurface: kColorOnSurface,
       onInverseSurface: kColorBackground,
-      inversePrimary: Color(0xFF1A3010),
+      inversePrimary: kColorPrimaryContainer,
     );
 
-    final textTheme = GoogleFonts.courierPrimeTextTheme(ThemeData.dark().textTheme);
+    final buttonText = WidgetStatePropertyAll(
+      mono(weight: FontWeight.w700, spacing: 1.5),
+    );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: kColorBackground,
-      textTheme: textTheme,
+      textTheme: GoogleFonts.courierPrimeTextTheme(ThemeData.dark().textTheme),
       appBarTheme: AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: kColorBackground,
         foregroundColor: kColorPrimary,
-        titleTextStyle: GoogleFonts.courierPrime(
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 2.4,
+        titleTextStyle: mono(
+          size: 14,
+          weight: FontWeight.w700,
+          spacing: 2.4,
           color: kColorPrimary,
         ),
         shape: const Border(
@@ -75,102 +125,71 @@ class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-          shape: const WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
+          shape: const WidgetStatePropertyAll(_square),
           textStyle: WidgetStatePropertyAll(
-            GoogleFonts.courierPrime(fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 1.5),
+            mono(size: 18, weight: FontWeight.w700, spacing: 1.5),
           ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-          shape: const WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
+          shape: const WidgetStatePropertyAll(_square),
           side: const WidgetStatePropertyAll(
             BorderSide(color: Color(0x9939FF14)),
           ),
-          textStyle: WidgetStatePropertyAll(
-            GoogleFonts.courierPrime(fontWeight: FontWeight.w700, letterSpacing: 1.5),
-          ),
+          textStyle: buttonText,
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          shape: const WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
-          textStyle: WidgetStatePropertyAll(
-            GoogleFonts.courierPrime(fontWeight: FontWeight.w700, letterSpacing: 1.5),
-          ),
+          shape: const WidgetStatePropertyAll(_square),
+          textStyle: buttonText,
         ),
       ),
       segmentedButtonTheme: const SegmentedButtonThemeData(
         style: ButtonStyle(
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          ),
-          side: WidgetStatePropertyAll(
-            BorderSide(color: kColorSecondary),
-          ),
+          shape: WidgetStatePropertyAll(_square),
+          side: WidgetStatePropertyAll(BorderSide(color: kColorSecondary)),
         ),
       ),
-      inputDecorationTheme: const InputDecorationTheme(
+      inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: kColorSurface,
-        border: OutlineInputBorder(borderRadius: BorderRadius.zero),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
-          borderSide: BorderSide(color: _outline),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
-          borderSide: BorderSide(color: kColorPrimary, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
-          borderSide: BorderSide(color: kColorError),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.zero,
-          borderSide: BorderSide(color: kColorError, width: 2),
-        ),
-        hintStyle: TextStyle(color: _outline),
+        border: _inputBorder(kColorOutline),
+        enabledBorder: _inputBorder(kColorOutline),
+        focusedBorder: _inputBorder(kColorPrimary, 2),
+        errorBorder: _inputBorder(kColorError),
+        focusedErrorBorder: _inputBorder(kColorError, 2),
+        hintStyle: const TextStyle(color: kColorOutline),
       ),
       bottomSheetTheme: const BottomSheetThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        shape: _square,
         backgroundColor: kColorSurface,
       ),
-      cardTheme: const CardThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        color: kColorSurface,
-      ),
+      cardTheme: const CardThemeData(shape: _square, color: kColorSurface),
       dialogTheme: const DialogThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        shape: _square,
         backgroundColor: kColorSurface,
       ),
-      listTileTheme: const ListTileThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      ),
+      listTileTheme: const ListTileThemeData(shape: _square),
       switchTheme: SwitchThemeData(
         thumbColor: const WidgetStatePropertyAll(kColorPrimary),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const Color(0x4D39FF14);
           }
-          return _outlineVariant;
+          return kColorOutlineVariant;
         }),
         trackOutlineColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) return Colors.transparent;
-          return _outline;
+          return kColorOutline;
         }),
       ),
       sliderTheme: const SliderThemeData(
         activeTrackColor: kColorPrimary,
         thumbColor: kColorPrimary,
         overlayColor: Color(0x2639FF14),
-        inactiveTrackColor: Color(0xFF2A3A28),
+        inactiveTrackColor: kColorOutlineVariant,
       ),
       iconTheme: const IconThemeData(color: kColorPrimary),
       iconButtonTheme: const IconButtonThemeData(
@@ -180,23 +199,21 @@ class AppTheme {
       ),
       popupMenuTheme: PopupMenuThemeData(
         color: kColorSurface,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        textStyle: GoogleFonts.courierPrime(color: kColorOnSurface),
+        shape: _square,
+        textStyle: mono(color: kColorOnSurface),
       ),
     );
   }
 
-  // Courier Prime for morse display and user input — typewriter / teletype feel
-  static TextStyle get morseTextStyle => GoogleFonts.courierPrime(
-        fontSize: 34,
-        height: 1.4,
-        letterSpacing: 4,
-        fontWeight: FontWeight.w600,
-      );
+  // ====================== Custom (non-Material) styles ======================
 
-  // Two-layer phosphor bloom — use sparingly (morse display, revealed answer)
+  /// Large ·/− morse display and revealed answer — typewriter / teletype feel.
+  static TextStyle get morseTextStyle =>
+      mono(size: 34, height: 1.4, spacing: 4, weight: FontWeight.w600);
+
+  /// Two-layer phosphor bloom — use sparingly (morse display, revealed answer).
   static List<Shadow> glowShadow(Color color) => [
-        Shadow(color: color.withValues(alpha: 0.8), blurRadius: 8),
-        Shadow(color: color.withValues(alpha: 0.4), blurRadius: 20),
+        Shadow(color: color.withValues(alpha: 0.8), blurRadius: kGlowInner),
+        Shadow(color: color.withValues(alpha: 0.4), blurRadius: kGlowOuter),
       ];
 }

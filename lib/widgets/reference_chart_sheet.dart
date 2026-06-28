@@ -79,14 +79,14 @@ class _ChartTile extends StatelessWidget {
             character,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.kColorSecondary,
+                  color: AppTheme.kColorPrimary,
                 ),
           ),
           Text(
             code,
             style: AppTheme.morseTextStyle.copyWith(
               fontSize: 18,
-              color: AppTheme.kColorPrimary,
+              color: AppTheme.kColorSecondary,
             ),
           ),
         ],

@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static final ButtonStyle _bigButton = FilledButton.styleFrom(
-    backgroundColor: const Color(0xFF1A3010),
+    backgroundColor: AppTheme.kColorPrimaryContainer,
     foregroundColor: AppTheme.kColorPrimary,
     side: const BorderSide(color: AppTheme.kColorPrimary),
     padding: const EdgeInsets.symmetric(vertical: 18),

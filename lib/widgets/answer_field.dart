@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../app_theme.dart';
 import '../state/game_controller.dart';
@@ -46,18 +45,18 @@ class AnswerField extends StatelessWidget {
               textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.done,
               onSubmitted: onSubmit,
-              style: GoogleFonts.courierPrime(
-                fontSize: 18,
+              style: AppTheme.mono(
+                size: 18,
                 color: AppTheme.kColorOnSurface,
               ),
               decoration: InputDecoration(
                 hintText: 'DECODE_',
                 filled: true,
                 prefixText: '> ',
-                prefixStyle: GoogleFonts.courierPrime(
-                  fontSize: 18,
+                prefixStyle: AppTheme.mono(
+                  size: 18,
                   color: AppTheme.kColorPrimary,
-                  fontWeight: FontWeight.w700,
+                  weight: FontWeight.w700,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.zero,

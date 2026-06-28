@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../app_theme.dart';
+
 /// Paints subtle CRT-style horizontal scanlines over its child.
 /// Lines are drawn every 4px at ~4% opacity — rasterized once, zero repaint cost.
 class ScanlineOverlay extends StatelessWidget {
@@ -26,7 +28,7 @@ class _ScanlinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0x0A000000)
+      ..color = AppTheme.kColorScanline
       ..strokeWidth = 1;
 
     for (double y = 0; y < size.height; y += 4) {
