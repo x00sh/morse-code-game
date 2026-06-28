@@ -37,6 +37,10 @@ play/replay control, score/timer, and answer field stay visible above it.
 `morse_timing.dart` is the **single source of truth** for timing; both `wav_synth.dart` and
 `haptic_service.dart` consume the same `ToneSegment` timeline produced by `morse_codec.dart`.
 
+## Theme & style
+
+Cold-war terminal aesthetic — phosphor green on near-black, monospace (Courier Prime), square corners, CRT scanlines, phosphor glow. Centralized in `lib/app_theme.dart`, where the **DESIGN TOKENS** block is the single source of truth the rest of the theme derives from. See `docs/theme.md`.
+
 ## Game modes
 
 `GameController` drives three `GameMode`s:
