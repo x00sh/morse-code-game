@@ -87,11 +87,11 @@ class _GameScreenState extends State<GameScreen> {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
-        title: const Text("Time's up!"),
+        title: const Text('TRANSMISSION COMPLETE'),
         content: Text(
-          'You decoded ${game.score} '
-          '${game.score == 1 ? 'puzzle' : 'puzzles'}.\n'
-          'Best: ${game.bestScore}',
+          'YOU DECODED ${game.score} '
+          '${game.score == 1 ? 'SIGNAL' : 'SIGNALS'}.\n'
+          'BEST: ${game.bestScore}',
         ),
         actions: [
           TextButton(
@@ -99,7 +99,7 @@ class _GameScreenState extends State<GameScreen> {
               Navigator.of(dialogContext).pop();
               Navigator.of(context).pop(); // back to home
             },
-            child: const Text('Home'),
+            child: const Text('HOME'),
           ),
           FilledButton(
             onPressed: () {
@@ -113,7 +113,7 @@ class _GameScreenState extends State<GameScreen> {
                   );
               _focusNode.requestFocus();
             },
-            child: const Text('Play again'),
+            child: const Text('PLAY AGAIN'),
           ),
         ],
       ),
@@ -134,9 +134,9 @@ class _GameScreenState extends State<GameScreen> {
     _maybeShowResults(game);
 
     final title = switch (widget.mode) {
-      GameMode.practice => 'Practice',
-      GameMode.timed => 'Timed Challenge',
-      GameMode.lesson => 'Lesson',
+      GameMode.practice => 'PRACTICE',
+      GameMode.timed => 'TIMED CHALLENGE',
+      GameMode.lesson => 'LESSON',
     };
 
     return PopScope(
@@ -208,18 +208,18 @@ class _ActionButtons extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onReplay,
               icon: const Icon(Icons.replay),
-              label: const Text('Replay'),
+              label: const Text('REPLAY'),
             ),
           if (mode == GameMode.practice)
             OutlinedButton.icon(
               onPressed: game.reveal,
               icon: const Icon(Icons.lightbulb_outline),
-              label: const Text('Reveal'),
+              label: const Text('REVEAL'),
             ),
           TextButton.icon(
             onPressed: game.skip,
             icon: const Icon(Icons.skip_next),
-            label: const Text('Skip'),
+            label: const Text('SKIP'),
           ),
         ],
       ),

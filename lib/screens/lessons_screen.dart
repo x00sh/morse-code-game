@@ -19,7 +19,7 @@ class LessonsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Learn'),
+        title: const Text('LEARN'),
         actions: [
           IconButton(
             tooltip: 'Reference chart',

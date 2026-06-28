@@ -5,6 +5,10 @@ either a **visual** ·/− string or an **audio** clip of beeps — and must dec
 answer. The UI is **keyboard-first**: the on-screen keyboard is up almost all the time, so the prompt,
 play/replay control, score/timer, and answer field stay visible above it.
 
+## CORE DESIGN PRINCIPLES
+
+- **Simplicity** -- always focus on the simplest possible implementation for a given task, if there is a good reason for a more complex implementation, ask the user first
+
 ## Stack
 
 | Concern | Choice | Notes |
@@ -46,33 +50,8 @@ The shared `GameScreen` and `ScoreTimerBar` adapt to the active mode; lessons ge
 
 ## Lessons (Koch method)
 
-Koch lessons drill single characters **by ear** (`PromptMode.audio`) at full character speed.
-`koch_lessons.dart` holds all the logic as pure data + functions (no Flutter/audio imports) so
-ordering, lesson derivation, character selection, and the unlock decision are unit-tested
-(`test/koch_lessons_test.dart`) without the platform. Lesson prompts still flow through
-`MorseCodec` / `MorseTiming`, keeping `morse_timing.dart` the single timing source.
-
-- A session is `kKochSessionLength` prompts, one shot each: the answer is revealed and the drill
-  auto-advances after `kKochAdvanceMs` regardless of correctness. The score bar shows progress
-  (`i/total`) and running accuracy.
-- A lesson is identified by its **unlocked-character count** `n` (`2..kKochOrder.length`), not a
-  1-based number, because that count is exactly what we persist (avoids off-by-one bugs). The
-  first lesson unlocks `K`+`M` (`kKochInitialUnlockCount`); each later lesson adds one more in
-  LCWO order. The newly introduced character is weighted `kKochNewCharWeight`× in selection.
-- Reaching `kKochPassAccuracy` (90%) on the *frontier* lesson unlocks the next character;
-  replaying an already-passed lesson never changes progress. The unlocked count is persisted by
-  `SettingsRepository` (`koch_unlocked_count`, default `kKochInitialUnlockCount`) and loaded in
-  `GameController.init()`.
+See `docs/koch-lessons.md`.
 
 ## Backlog / future ideas
 
-Deferred from the MVP (considered but not built yet):
-
-- **Encode / tap-out mode** — show a word; user taps out the Morse with dot/dash keys (two-way practice).
-- **Daily challenge** — one fixed shared puzzle per day.
-- **Hints** — reveal a letter, or replay the audio slowed down.
-- **Progress stats** — per-character accuracy and history, persisted locally.
-- **Score & streaks** — combo multipliers, accuracy %, streak tracking (beyond the basic timed count).
-- **Lives / hearts** — limited wrong answers per round.
-- **Online leaderboard** — global rankings (requires a backend + networking).
-- Swap `audioplayers` → `flutter_soloud` and `provider` → `flutter_riverpod` once verified on-device.
+See `docs/backlog.md`.

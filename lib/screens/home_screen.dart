@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../app_theme.dart';
 import '../models/koch_lessons.dart';
 import '../models/prompt_mode.dart';
 import '../services/content_repository.dart';
@@ -133,7 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static final ButtonStyle _bigButton = FilledButton.styleFrom(
+    backgroundColor: const Color(0xFF1A3010),
+    foregroundColor: AppTheme.kColorPrimary,
+    side: const BorderSide(color: AppTheme.kColorPrimary),
     padding: const EdgeInsets.symmetric(vertical: 18),
-    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
   );
 }
