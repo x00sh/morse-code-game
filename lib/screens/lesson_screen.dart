@@ -65,7 +65,7 @@ class _LessonScreenState extends State<LessonScreen> {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
-        title: Text(passed ? 'Lesson passed!' : 'Keep practicing'),
+        title: Text(passed ? 'LESSON PASSED' : 'KEEP PRACTICING'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,14 +92,14 @@ class _LessonScreenState extends State<LessonScreen> {
               Navigator.of(dialogContext).pop();
               Navigator.of(context).pop(); // back to the lessons list
             },
-            child: const Text('Home'),
+            child: const Text('HOME'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(dialogContext).pop();
               _restart(widget.lesson);
             },
-            child: const Text('Retry'),
+            child: const Text('RETRY'),
           ),
           if (canAdvance)
             FilledButton(
@@ -113,7 +113,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                 );
               },
-              child: const Text('Next lesson'),
+              child: const Text('NEXT LESSON'),
             ),
         ],
       ),
@@ -173,7 +173,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         child: OutlinedButton.icon(
                           onPressed: game.playPrompt,
                           icon: const Icon(Icons.replay),
-                          label: const Text('Replay'),
+                          label: const Text('REPLAY'),
                         ),
                       ),
                     ],

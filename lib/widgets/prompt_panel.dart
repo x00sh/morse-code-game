@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../app_theme.dart';
 import '../models/prompt_mode.dart';
 import '../state/game_controller.dart';
 import 'morse_visual.dart';
@@ -21,14 +22,14 @@ class PromptPanel extends StatelessWidget {
       );
     }
 
-    final label = puzzle.mode == PromptMode.visual ? 'Read the code' : 'Listen';
+    final label = puzzle.mode == PromptMode.visual ? 'READ THE CODE' : 'LISTEN';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            label.toUpperCase(),
+            label,
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   letterSpacing: 2,
                   color: Theme.of(context).colorScheme.outline,
@@ -46,6 +47,7 @@ class PromptPanel extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                     letterSpacing: 2,
+                    shadows: AppTheme.glowShadow(AppTheme.kColorPrimary),
                   ),
             ),
           ],
@@ -62,28 +64,37 @@ class _PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Material(
-          color: scheme.primaryContainer,
-          shape: const CircleBorder(),
+          color: Colors.transparent,
           child: InkWell(
-            customBorder: const CircleBorder(),
             onTap: onTap,
-            child: Padding(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppTheme.kColorPrimary,
+                  width: 1.5,
+                ),
+              ),
               padding: const EdgeInsets.all(28),
-              child: Icon(Icons.volume_up_rounded,
-                  size: 56, color: scheme.onPrimaryContainer),
+              child: const Icon(
+                Icons.volume_up_rounded,
+                size: 56,
+                color: AppTheme.kColorPrimary,
+              ),
             ),
           ),
         ),
         const SizedBox(height: 12),
-        Text('Tap to replay',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: scheme.outline,
-                )),
+        Text(
+          '> TAP TO PLAY',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.outline,
+                letterSpacing: 1.5,
+              ),
+        ),
       ],
     );
   }

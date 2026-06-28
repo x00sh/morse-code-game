@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../app_theme.dart';
 import '../state/game_controller.dart';
 
 /// The answer text field plus submit button, pinned just above the keyboard.
@@ -25,7 +26,7 @@ class AnswerField extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final borderColor = switch (feedback) {
-      AnswerFeedback.correct => Colors.green,
+      AnswerFeedback.correct => AppTheme.kColorSuccess,
       AnswerFeedback.incorrect => scheme.error,
       AnswerFeedback.none => scheme.outline,
     };
@@ -44,20 +45,30 @@ class AnswerField extends StatelessWidget {
               textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.done,
               onSubmitted: onSubmit,
+              style: AppTheme.mono(
+                size: 18,
+                color: AppTheme.kColorOnSurface,
+              ),
               decoration: InputDecoration(
-                hintText: 'Type your answer',
+                hintText: 'DECODE_',
                 filled: true,
+                prefixText: '> ',
+                prefixStyle: AppTheme.mono(
+                  size: 18,
+                  color: AppTheme.kColorPrimary,
+                  weight: FontWeight.w700,
+                ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.zero,
                   borderSide: BorderSide(color: borderColor, width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.zero,
                   borderSide: BorderSide(color: borderColor, width: 2),
                 ),
                 suffixIcon: switch (feedback) {
                   AnswerFeedback.correct =>
-                    const Icon(Icons.check_circle, color: Colors.green),
+                    const Icon(Icons.check_circle, color: AppTheme.kColorSuccess),
                   AnswerFeedback.incorrect =>
                     Icon(Icons.cancel, color: scheme.error),
                   AnswerFeedback.none => null,
@@ -71,7 +82,7 @@ class AnswerField extends StatelessWidget {
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
             ),
-            child: const Text('Go'),
+            child: const Text('SEND'),
           ),
         ],
       ),

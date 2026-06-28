@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../app_theme.dart';
 import '../models/morse_alphabet.dart';
 
 /// Shows the Morse reference chart as a draggable bottom sheet. It overlays the
@@ -21,7 +22,7 @@ Future<void> showReferenceChart(BuildContext context) {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
                 child: Text(
-                  'Morse Reference',
+                  'MORSE REFERENCE',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -62,11 +63,13 @@ class _ChartTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: scheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(10),
+        color: AppTheme.kColorSurface,
+        border: Border.all(
+          color: AppTheme.kColorPrimary.withValues(alpha: 0.18),
+          width: 1,
+        ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
@@ -74,17 +77,16 @@ class _ChartTile extends StatelessWidget {
         children: [
           Text(
             character,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.kColorPrimary,
+                ),
           ),
           Text(
             code,
-            style: const TextStyle(
-              fontFamily: 'monospace',
+            style: AppTheme.morseTextStyle.copyWith(
               fontSize: 18,
-              letterSpacing: 2,
+              color: AppTheme.kColorSecondary,
             ),
           ),
         ],

@@ -14,9 +14,9 @@ import 'morse_alphabet.dart';
 /// about ([kMorseAlphabet]). Every LCWO character already exists in the alphabet,
 /// so the filter is defensive: it keeps this list valid if the alphabet changes.
 final List<String> kKochOrder = const [
-  'K', 'M', 'U', 'R', 'E', 'S', 'N', 'A', 'P', 'T', 'L', 'W', 'I', '.',
-  'J', 'Z', '=', 'F', 'O', 'Y', ',', 'V', 'G', '5', '/', 'Q', '9', '2',
-  'H', '3', '8', 'B', '?', '4', '7', 'C', '1', 'D', '6', '0', 'X',
+  'K', 'M', 'U', 'R', 'E', 'S', 'N', 'A', 'P', 'T', 'L', 'W', 'I', 'J',
+  'Z', 'F', 'O', 'Y', 'V', 'G', 'Q', 'H', 'B', 'C', 'D', 'X',
+  '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
 ].where(kMorseAlphabet.containsKey).toList(growable: false);
 
 /// Prompts shown per lesson drill.
@@ -54,7 +54,7 @@ class KochLesson {
 
   /// Human label, e.g. `"Lesson 1: +K M"` or `"Lesson 2: +U"`.
   String get label =>
-      'Lesson ${unlockedCount - kKochInitialUnlockCount + 1}: +${newChars.join(' ')}';
+      'Lesson ${unlockedCount - kKochInitialUnlockCount + 1}: ${newChars.join(' ')}';
 
   /// True when there is no further character to unlock.
   bool get isFinal => unlockedCount >= kKochOrder.length;

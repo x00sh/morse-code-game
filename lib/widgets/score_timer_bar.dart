@@ -21,24 +21,24 @@ class ScoreTimerBar extends StatelessWidget {
           GameMode.lesson => [
               _Chip(
                 icon: Icons.school_outlined,
-                label: 'Lesson',
+                label: 'LESSON',
                 value: '${game.lessonIndex}/${game.lessonTotal}',
               ),
               _Chip(
                 icon: Icons.percent_rounded,
-                label: 'Acc',
+                label: 'ACC',
                 value: '${(game.lessonAccuracy * 100).round()}%',
               ),
             ],
           GameMode.timed => [
               _Chip(
                 icon: Icons.star_rounded,
-                label: 'Score',
+                label: 'SCORE',
                 value: '${game.score}',
               ),
               _Chip(
                 icon: Icons.timer_outlined,
-                label: 'Time',
+                label: 'TIME',
                 value: '${game.secondsLeft}s',
                 highlight: game.secondsLeft <= 10,
                 color: game.secondsLeft <= 10 ? scheme.error : null,
@@ -47,12 +47,12 @@ class ScoreTimerBar extends StatelessWidget {
           GameMode.practice => [
               _Chip(
                 icon: Icons.star_rounded,
-                label: 'Score',
+                label: 'SCORE',
                 value: '${game.score}',
               ),
               _Chip(
                 icon: Icons.emoji_events_outlined,
-                label: 'Best',
+                label: 'BEST',
                 value: '${game.bestScore}',
               ),
             ],
