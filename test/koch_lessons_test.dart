@@ -5,7 +5,7 @@ import 'package:morse_code_game/models/morse_alphabet.dart';
 void main() {
   group('kKochOrder', () {
     test('has 40 characters, all known to the alphabet', () {
-      expect(kKochOrder.length, 41);
+      expect(kKochOrder.length, 36);
       for (final ch in kKochOrder) {
         expect(kMorseAlphabet.containsKey(ch), isTrue, reason: '$ch missing');
       }

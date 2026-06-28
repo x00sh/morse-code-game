@@ -16,9 +16,12 @@ Future<void> main() async {
   final settings = SettingsController(settingsRepo);
   await settings.load();
 
+  final audio = AudioPlayerService();
+  await audio.init();
+
   final game = GameController(
     content: ContentRepository(),
-    audio: AudioPlayerService(),
+    audio: audio,
     haptic: HapticService(),
     settings: settings,
     settingsRepo: settingsRepo,

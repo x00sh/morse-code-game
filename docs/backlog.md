@@ -8,4 +8,4 @@ Deferred from the MVP (considered but not built yet):
 - **Score & streaks** — combo multipliers, accuracy %, streak tracking (beyond the basic timed count).
 - **Lives / hearts** — limited wrong answers per round.
 - **Online leaderboard** — global rankings (requires a backend + networking).
-- Swap `audioplayers` → `flutter_soloud` and `provider` → `flutter_riverpod` once verified on-device.
+- Swap `provider` → `flutter_riverpod` once verified on-device.

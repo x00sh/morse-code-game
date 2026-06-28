@@ -14,17 +14,16 @@ play/replay control, score/timer, and answer field stay visible above it.
 | Concern | Choice | Notes |
 |---|---|---|
 | Framework | Flutter / Dart | One codebase for Android + iOS. |
-| Audio playback | `audioplayers` (`BytesSource`) | Plays an in-memory WAV. Wrapped by `AudioPlayerService` so `flutter_soloud` can be swapped in later for lower-latency game audio. |
+| Audio playback | `flutter_soloud` (`loadMem`) | Plays an in-memory WAV through SoLoud's in-process mixer for low-latency replays. Wrapped by `AudioPlayerService`. |
 | Audio synthesis | Pure Dart (`dart:typed_data` / `dart:math`) | Whole clip synthesized per puzzle as one 16-bit PCM WAV buffer (`wav_synth.dart`). Hann envelope avoids clicks. |
 | Haptics | `vibration` | Vibrates the dit/dah/gap pattern (`haptic_service.dart`); also a no-sound play mode. |
 | State management | `provider` + `ChangeNotifier` | `SettingsController`, `GameController`. |
 | Persistence | `shared_preferences` | WPM, tone Hz, Farnsworth WPM, haptics on/off, best timed score, Koch lesson progress (unlocked-character count). |
 | Content | Bundled JSON assets | `assets/content/*.json`. No backend. |
 
-> The audio-player and state-management choices are the lighter, more API-stable fallbacks named in the
-> approved plan, chosen because the project was scaffolded before the Flutter SDK was available to
-> compile-verify the newer `flutter_soloud` / Riverpod APIs. The `AudioPlayerService` abstraction keeps
-> the SoLoud swap a localized change.
+> The state-management choice (`provider`) is the lighter, more API-stable fallback named in the approved
+> plan, chosen because the project was scaffolded before the Flutter SDK was available to compile-verify
+> the newer Riverpod APIs.
 
 ## Architecture
 

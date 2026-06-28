@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.0
-  audioplayers: ^6.0.0
+  flutter_soloud: ^4.0.11
   vibration: ^3.0.0
   shared_preferences: ^2.2.0
   cupertino_icons: ^1.0.8
